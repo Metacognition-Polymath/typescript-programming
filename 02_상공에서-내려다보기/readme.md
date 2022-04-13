@@ -110,3 +110,43 @@ let a = 1;
 `cd 02_상공에서-내려다보기`
 `npm init -y`
 `npm install --save-dev typescript tslint @type/node`
+
+- 회사에서 npm 으로 뭘 설치가 안되게 막혀있다
+
+### 2.3.1 tsconfig.json
+
+```json
+{
+  "compilerOptions" : {
+    "lib": ["es2015"],
+    "module": "commonjs",
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2015"
+  },
+  "include": [
+    "src"
+  ]
+}
+```
+- tsconfig.json
+  - `tsc --init` 으로 자동 생성 가능
+- include : TSC가 타입스크립트를 찾을 디렉터리
+- lib : TSC가 코드 실행 환경에서 이용할 수 있다고 가정하는 API(ES5의 Function.prototype.bind, Object.assign, document.querySelect 등)
+- module : TSC가 코드를 컴파일할 대상 모듈 시스템(CommonJs, SystemJs, ES2015 등)
+  - 자바스크립트 파일간 import 문법을 구현할 때 어떤 문법을 쓸지 정하는 부분
+    - commonjs는 require문법 -> IE호환성을 원한다면 commonjs가 국룰
+    - es2015, esnext는 import 문법
+- outDir : 생성된 자바스크립트 코드를 출력할 디렉터리
+- strict : 유효하지 않은 코드를 가능한 엄격히 검사
+- target : TSC가 코드를 컴파일할 자브스크립트 버전(ES3, ES5, ES2015, ES2016 등)
+  - 타입스크립트 파일을 어떤 자바스크립트로 바꿔줄지 정하는 부분
+
+- 참고 : https://codingapple.com/unit/typescript-tsconfig-json/
+
+### 2.3.2 tslint.json
+- deprecated 됨
+- ESLint를 사용해야 함
+
+## 2.4 index.ts
