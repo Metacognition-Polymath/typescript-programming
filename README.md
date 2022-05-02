@@ -3,6 +3,16 @@
 - 더 빠르고 안정적인 자바스크립트 앱 개발을 위한 핵심 기능과 활용법
 - 저자 : 보리스 체르니
 
+## 스터디
+
+- 시간 : 월, 수, 금 오후 10시
+- 장소 : [게더타운](https://app.gather.town/app/zvVfLbjGc6DVVluv/DeepDiveStudy)
+- 소통 : [슬랙](https://metacognition-hq.slack.com/archives/C03DZ8G0V5F)
+- 진행 방식
+  - 한명씩 돌아가면서 발표
+  - 발표자가 아니더라도 공부해와서 토론
+  - 스터디 시작 전까지 공부한 내용 커밋하기
+
 ## 차례
 
 - [ ] 1. 소개
@@ -33,3 +43,17 @@
 
 - 마지막 장의 연습문제 답안
   - https://github.com/bcherny/programming-typescript-answers
+
+## commit 및 push 방법
+
+- 각 장의 폴더에 본인의 이름(닉네임)으로 폴더를 만들고 그 안에 공부내용을 정리한 뒤 올린다.
+- e.g., 02\_상공에서-내려다보기 > Tony > 02_summary.md
+- 본인 이름으로 된 폴더를 만들어서 정리해서 충돌이 날일이 없기 때문에 main에 직접 push한다.
+  - 브랜치를 따서 pull request 이후 merge 하셔도 됩니다
+
+### 터미널 명령어
+
+- git pull
+- git add .
+- git commit -m "`이름` : `내용`"
+- git push origin main
