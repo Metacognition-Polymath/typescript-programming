@@ -111,8 +111,6 @@ let a = 1;
 `npm init -y`
 `npm install --save-dev typescript tslint @type/node`
 
-- 회사에서 npm 으로 뭘 설치가 안되게 막혀있다
-
 ### 2.3.1 tsconfig.json
 
 ```json
