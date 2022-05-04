@@ -9,7 +9,7 @@
 - 장소 : [게더타운](https://app.gather.town/app/zvVfLbjGc6DVVluv/DeepDiveStudy)
 - 소통 : [슬랙](https://metacognition-hq.slack.com/archives/C03DZ8G0V5F)
 - 진행 방식
-  - 한명씩 돌아가면서 발표
+  - 한명씩 돌아가면서 발표(chapter 2개씩)
     - 발표 순서 : 토니 -> 젝키 -> 위즈
   - 발표자가 아니더라도 공부해와서 토론
   - 스터디 시작 전까지 공부한 내용 커밋하기
