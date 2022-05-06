@@ -87,10 +87,12 @@
     d: string;
   };
   type ObjUnion = Obj1 | Obj2;
-  const obj1: ObjUnion = {
+  type Obj = {
+    obj1: Obj1;
+  };
+  const obj1: Obj["obj1"] = {
     a: "a",
     b: "b",
-    c: "c",
   };
   type ObjIntersection = Obj1 & Obj2;
   const obj2: ObjIntersection = {
