@@ -149,3 +149,8 @@ let a = 1;
 - ESLint를 사용해야 함
 
 ## 2.4 index.ts
+
+## 컴파일
+
+- tsc
+  - tsconfig.json에 있는 대로 컴파일하여 js파일을 만들음
