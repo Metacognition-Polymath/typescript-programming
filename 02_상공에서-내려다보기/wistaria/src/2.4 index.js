@@ -10,8 +10,8 @@ var c = {
     apple: a,
     banana: b
 };
-let d = c.banana *4
-console.log(d)
+// let d = c.banana *4
+// console.log(d)
 /*
 error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or
 an enum type.
