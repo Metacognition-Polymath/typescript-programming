@@ -16,5 +16,6 @@ module.exports = {
   ],
   rules: {
     "semi": "off",
+    "no-invalid-this": "off",
   },
 };
