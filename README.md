@@ -5,7 +5,7 @@
 
 ## 스터디
 
-- 시간 : 월, 수, 금 오후 10시
+- 시간 : 월, 수, 금 오후 9시
 - 장소 : [게더타운](https://app.gather.town/app/zvVfLbjGc6DVVluv/DeepDiveStudy)
 - 소통 : [슬랙](https://metacognition-hq.slack.com/archives/C03DZ8G0V5F)
 - 진행 방식
