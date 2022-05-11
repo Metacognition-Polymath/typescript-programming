@@ -15,7 +15,6 @@
     const time = new Date().toISOString();
     // console.log(time, message, userId);
   };
-
   // log("hi I am Tony");
 }
 {
@@ -131,4 +130,10 @@
   }
 
   console.log(is([1], [1, 2]));
+
+  // function is1<T>(a: T, ...b: [T, ...T[]]): boolean {
+  //   return b.every((_) => _ === a);
+  // }
+
+  // console.log(is1([1], [1]));
 }
