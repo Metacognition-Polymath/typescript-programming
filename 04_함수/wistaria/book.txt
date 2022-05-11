@@ -1,168 +1,12 @@
-
-반복자 코드를 코드 편집기에 입력한 다음 마우스를 올려놓으면 타입스크립트가 반복자 코드의 타입을 어떻게 추론하는지 확인할 수 있다(그림 4-2).
-
-1 2 3 4 5 6 7 8 let numbers: { [Symbol. iterator](): IterableIterator<number>; } let numbers = { *[Symbol. iterator]() { for (let n = 1; n < 10; n+){ yield n } } 9 10 11 12 그림 4-2 직접 반복자 정의하기
-
-결과에서 볼 수 있듯이 numbers는 이터러블이며, 제너레이터 함수 numbers[Symbol.iterator]()를 호출하면 이터러블 반복자가 반환된다.
-
-다음 예에서 보여주듯이 커스텀 반복자뿐 아니라 자바스크립트의 내장 컬렉션 타입(Array, Map, Set, String 등)의 반복자도 정의할 수 있다.
-
-4참고로 Object와 Number는 반복자가 아니다.
-
-4장 함수
-
-66
-
-
-TypeScript
-
-// for-of로 반복자 반복하기 for (let a of numbers) {// 1,2,3 등 }
-
-// 반복자 스프레드 let al Numbers = [...numbers] // number[]
-
-// 반복자 구조 분해 할당 (destructure) let (one, two, ... rest] = numbers // [number, number, number[0]
-
-반복자도 이 책에서는 자세히 살펴보지 않는다. 반복자와 비동기 반복자를 더 자세히 확인하고 싶다면 MDN'을 참고하자.
-
-TSC 플래그: downlevellteration
-
-타입스크립트를 ES2015 이전 버전의 자바스크립트로 컴파일할 때는 tsconfig.json에서 down levelIteration 플래그로 커스텀 반복자를 활성화할 수 있다. 응용 프로그램의 번들 크기가 커지는 것을 원하지 않으면 downlevelIteration을 비활성화하는 것이 좋다. 예전 환경에서 커스텀 반복자를 지원하려면 많은 코드가 필요하기 때문이다. 예를 들어 이전 numbers 예제는 1KB의 코드를 생성한다(gzipped 상태 기준).
-
-44.1.7 호출 시그니처
-
-지금까지 함수의 매개변수 타입과 반환 타입을 살펴봤다. 이번에는 함수의 전체 타입을 표현하는 방법을 알아보자. 4장의 처음 부분에서 소개했던 sum 함수를 다시 이용한다. 참고로 sum 함수의 코드는 다음과 같다.
-
-function sum(a: number, b: number): number { return a + b }
-
-sum은 무슨 타입일까? sum은 함수이므로 sum은 다음의 타입이라 말할 수 있다.
-
-Function
-
-어느 정도 예상할 수 있겠지만 Function은 사람들이 즐겨 사용하는 타입은 아
-
-5 hups://mzl.la/20Aoylo
-
-4.1 함수 선언과 호출
-
-67
-
-
-니다. object로 모든 객체를 가리킬 수 있는 것처럼 Function은 모든 함수의 타입을 뜻할 뿐이며 그것이 가리키는 특정 함수와 타입과 관련된 정보는 아무것도 알려주지 않는다.
-
-그러면 sum의 타입을 표현할 수 있는 다른 방법이 있을까? sum은 두 개의number를 인수로 받아 한 개의 number를 반환하는 함수다. 타입스크립트에서는다음과 같이 표현할 수 있다.
-
-(a: number, b: number) => number
-
-이 코드는 타입스크립트의 함수 타입 문법으로, 호출 시그니처(call signature)또는 타입 시그니처(type signature)라 부른다. 이 문법은 화살표 함수와 아주비슷하다는 점을 알 수 있는데 이는 의도된 것이다! 함수에 함수를 인수로 전달하거나 함수에서 다른 함수를 반환하는 경우 이 문법으로 인수나 반환 함수의 타입을 지정할 수 있다.
-
-a, b라는 매개변수명은 문서화 용도일 뿐 함수의 타입과 할당 동작에는 아무 영향도 주지않는다.
-
-함수 호출 시그니처는 타입 수준 코드, 즉 값이 아닌 타입 정보만 포함한다. 이는 함수 호출 시그니처로 매개변수 타입, this 타입("4. 1.4 this의 타입 참고),반환 타입, 나머지 타입, 조건부 타입을 표현할 수 있지만 기본값은 표현할 수없다(기본값은 타입이 아니라 값이므로), 함수 호출 시그니처는 바디를 포함하지 않아 타입스크립트가 타입을 추론할 수 없으므로 반환 타입을 명시해야한다.
-
-타입 수준 코드와 값 수준 코드
-
-정적 타입 프로그래밍에서 사람들은 ‘타입 수준’, ‘값 수준'이라는 용어를 자주 사용하는데이들은 공용 어휘다.
-
-이 책에서 사용하는 타입 수준 코드는 타입과 타입 연산자를 포함하는 코드를 의미한다. 반면 값 수준 코드는 그 밖의 모든 것을 가리킨다. 어떤 코드가 유효한 자바스크립트 코드라면
-
-4장 함수
-
-Programming
-
-68
-
-
-TypeScript
-
-는 값 수준이고, 유효한 자바스크립트 코드는 아니지만 유효한 타입스크립트 코드라면 타입 수준으로 쉽게 구분할 수 있다. 6
-
-다음 예제를 통해 여러분이 이 개념을 제대로 이해했는지 확인하자(굵은 글씨는 타입 수준이고 나머지는 값 수준이다).
-
-function area(radius: number): number | null { if (radius < 0) { return null } return Math.PI * (radius ** 2) }
-
-let r: number = 3 let a = area(r) if(a !== null) { console.info('result:', a) }
-
-타입 어노테이션과 유니온 타입 연산자(1)는 타입 수준이므로 굵게 표시했고 나머지는 모두 값 수준 용어다.
-
-지금까지 4장에서 살펴본 함수 예제를 다시 살펴보면서 타입 별칭으로 한정할 수 있는 독립 호출 시그니처를 추출해보자.
-
-// greet(name: string) 함수 type Greet = (name: string) => string
-
-// log(message: string, userId?: string) 함수 type Log = (message: string, userId?: string) => void
-
-// sumVariadicSafe(... numbers: number[]): number of type SumVariadicSafe = (... numbers: number[]) => number
-
-예제가 도움이 되었는가? 함수의 호출 시그니처는 구현 코드와 거의 같다. 우연이 아니라 언어 설계상 의도한 결정으로, 이렇게 함으로 호출 시그니처를 쉽
-
-1. 단, 열거형, 클래스, 네임스페이스는 예외다. 열거형은 타입과 값 모두 생성하며 네임스페이스는 값 수준에서 존재한다. 자세한 사항은 부록 C를 참고하자.
-
-4.1 함수 선언과 호출
-
-69
-
-
-Programming
-
-게 한 수 있다.
-
-오는 시그니기와 구현의 관계를 디 구제적으로 확인하자. 호출 시그니처가구이 있을 때 이떻게 그 시그니기를 만주하는 함수를 구현할 수 있을까? 간단하게 호출 시 그니지를 함수 표현식과 합칠 수 있다. 예를 들어 기존의 Log 함수를새로운 시그니시에 맛게 다시 구현해보자.
-
-type Log = (message: string, userId?: string) => void
-
-let log: Log message, 2 userId = 'Not signed in' 3 let time = new Date().toISOString() console.log(time, message, userId) }
-
-0 함수 표현식 log를 선언하면서 Log 타입임을 명시했다.
-
-② 매개변수의 타입을 다시 지정할 필요는 없다. Log에서 message의 타입을string으로 이미 명시했으므로 다시 지정할 필요는 없다. 타입스크립트가Log를 통해 타입을 추론한다.
-
-userId에 기본값을 지정한다. 호출 시그니처는 값을 포함할 수 없으므로Log에서는 userId의 타입은 지정할 수 있지만 기본값은 지정할 수 없기 때문이다.
-
-Q Log 타입에서 반환 타입을 void로 이미 지정했으므로 반환 타입은 다시 지정할 필요가 없다.
-
-4.1.8 문맥적 타입화
-
-마지막 예는 함수의 매개변수 타입을 명시하지 않아도 되는 첫 사례였다. 이미log의 타입을 Log로 지정했으므로 타입스크립트가 message의 타입을 string으로 추론할 수 있기 때문이다. 이는 문맥적 타입화(contextual typing)라는 타입스크립트 강력한 타입 추론 기능이다.
-
-4장 함수
-
-70
-
-
-TypeScript -
-
-4장의 앞부분에서 문맥적 타입화를 사용하는 다른 상황(콜백 함수)을 살펴본 바 있다.
-
-times라는 함수를 다음과 같이 선언하자. 이 함수는 콜백 함수 f를 n번 호출하며, 현재의 인덱스를 f의 인수로 전달한다.
-
-function times f: (index: number) => void, n: number { for (let i = 0; i < n; i++) { f(i) } }
-
-times를 호출할 때 함수 선언을 인라인으로 제공하면 인수로 전달하는 함수의 타입을 명시할 필요가 없다.
-
-times (n => console.log(n), 4)
-
-times의 시그니처에서 f의 인수 index를 number로 선언했으므로 타입스크립트는 문맥상 n이 number임을 추론할 수 있다.
-
-f를 인라인으로 선언하지 않으면 타입스크립트는 타입을 추론할 수 없다.
-
-function f(n) { // 에러 TS7006: 매개변수 'n'의 타입은 암묵적으로 'any' 타입이 됨 console.log(n)}
-
-times(f, 4)
-
 4.1.9 오버로드된 함수 타입
 
 이전 절에서 사용한 함수 타입 문법(type Fn = (...) => ...)은 단축형 호출 시그니처(shorthand call signature)다. 이 호출 시그니처를 더욱 명확하게 표현할 수 있다. 다시 Log를 예로 살펴보자.
 
-7 다른 함수의 인수로 전달하는 함수를 '콜백'이라 한다.
+다른 함수의 인수로 전달하는 함수를 '콜백'이라 한다.
 
 4.1 함수 선언과 호출
 
-71
-
-
-Programming
-
 // 단축형 호출 시그니처 type Log (message: string, userId?: string) => void
-
 // 전체 호출 시그니처 type Log = { (message: string, userId?: string): void }
 
 두 코드는 문법만 조금 다를 뿐 모든 면에서 같다. 여러분은 단축 시그니처를 놔두고 전체 시그니처를 사용하고 싶은가? Log 함수처럼 간단한 상황이라면 단축형을 주로 활용하되 더 복잡한 함수라면 전체 시그니처를 사용하는 것이 좋을 때도 있다.
@@ -171,20 +15,11 @@ Programming
 
 오버로드된 함수 호출 시그니처가 여러 개인 함수
 
-대부분의 프로그래밍 언어에서 여러 매개변수를 인수로 받아 어떤 타입의 값을 반환하는 함수를 선언한 다음, 이 함수가 요구하는 정확한 매개변수 집합을 건네 함수를 호출하면 항상 똑같은 타입의 반환값을 받게 된다. 자바스크립트는 예외다. 자바스크립트는 동적 언어이므로 어떤 함수를 호출하는 방법이 여러 가지다. 뿐만 아니라 인수 입력 타입에 따라 반환 타입이 달라질 때도
-
-있다!
+대부분의 프로그래밍 언어에서 여러 매개변수를 인수로 받아 어떤 타입의 값을 반환하는 함수를 선언한 다음, 이 함수가 요구하는 정확한 매개변수 집합을 건네 함수를 호출하면 항상 똑같은 타입의 반환값을 받게 된다. 자바스크립트는 예외다. 자바스크립트는 동적 언어이므로 어떤 함수를 호출하는 방법이 여러 가지다. 뿐만 아니라 인수 입력 타입에 따라 반환 타입이 달라질 때도 있다!
 
 타입스크립트는 이런 동적 특징을 오버로드된 함수 선언으로 제공하고, 입력 타입에 따라 달라지는 함수의 출력 타입은 정적 타입 시스템으로 각각 제공한다. 이런 언어 기능을 당연하게 여길 수도 있겠지만 사실 타입 시스템의 고급 기능에 속한다!
 
 오버로드된 함수 시그니처를 이용하면 표현력 높은 API를 설계할 수 있다. 예를 들어 Reserve라는 휴가 예약 API를 설계한다고 가정하자. 먼저 타입을 다음처럼 지정할 수 있다(전체 타입 시그니처 사용).
-
-4장 함수
-
-72
-
-
-TypeScript
 
 type Reserve = { (from: Date, to: Date, destination: string): Reservation }
 
@@ -198,9 +33,9 @@ let reserve: Reserve = (from, to, destination) => >{ }
 
 type Reserve = { (from: Date, to: Date, destination: string): Reservation (from: Date, destination: string): Reservation }
 
-이 코드를 실행하려 시도하면 타입스크립트가 Reserve를 구현한 코드러를 발생시킨다(그림 4-3).
+이 코드를 실행하려 시도하면 타입스크립트가 Reserve를 구현한 코드러를 발생시킨다
 
-에서 에
+(그림 4-3).에서 에
 
 let reserve: Reserve = (from, to, destination) { W... type } (f [ts] Type (from: any, to: any, destination: any) → v (f oid' is not assignable to type 'Reserve'. } let reserve: Reserve let reserve: Reserve = (frorn, to, destination) { }
 
@@ -323,6 +158,21 @@ type WarnUser = {{ (warning: string): void wasCalled: boolean }
 
 warnuser는 호출할 수 있는 함수인 동시에 불 속성인 wasCalled도 가지고 있다.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 4.2 다형성
 
 지금까지 구체적인 타입과 구체적인 타입을 사용하는 함수 관련 내용을 살펴봤다. 과연 구체 타입(concrete type)이란 무엇일까? 지금까지 우리가 살펴본모든 타입은 구체 타입이다.
@@ -334,13 +184,6 @@ boolean string Date[] •{a: number} | {b: string}
 기대하는 타입을 정확하게 알고 있고, 실제 이 타입이 전달되었는지 확인할 때는 구체 타입이 유용하다. 하지만 때로는 어떤 타입을 사용할지 미리 알 수 없는 상황이 있는데 이런 상황에서는 함수를 특정 타입으로 제한하기 어렵다!
 
 filter라는 함수를 예로 구현하면서 이 내용을 조금 더 생각해보자. 자바스크립트로 filter를 이용해 배열을 반복하면서 정제하는 코드를 다음처럼 구현할 수 있다.
-
-4장 함수
-
-78
-
-
-TypeScript
 
 function filter(array, f) { let result = 0) for (let i = 0; i < array.length; i++) { let item = array [il if (f(item)) { result.push(item) } } return result }
 

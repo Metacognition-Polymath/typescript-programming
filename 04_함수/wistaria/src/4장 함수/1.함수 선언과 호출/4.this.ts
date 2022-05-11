@@ -1,12 +1,11 @@
-  // 자바스크립트의 this는 호출방식에 따라 값이 달라진다.
-  // 많은 개발팀은 클래스 메서드를 제외한 다른 모든 곳에서 this 사용을 금한다. 
-  // .eslintrc.js
-  // rules: {
-  //   "no-invalid-this": "off";
-  // }
-  // 화살표함수는 this 를 문맥에 따라 사용하기 때문에 호출 주체에 따라 변경되지 않는다
-  // this 가 호출주체에 따라 사용되게 할 때 function 키워드를 사용하는게 좋다
-  
+// 자바스크립트의 this는 호출방식에 따라 값이 달라진다.
+// 많은 개발팀은 클래스 메서드를 제외한 다른 모든 곳에서 this 사용을 금한다. 
+// .eslintrc.js
+// rules: {
+//   "no-invalid-this": "off";
+// }
+// 화살표함수는 this 를 문맥에 따라 사용하기 때문에 호출 주체에 따라 변경되지 않는다
+// this 가 호출주체에 따라 사용되게 할 때 function 키워드를 사용하는게 좋다
 
 {
   function fancyDate1() { 
@@ -19,7 +18,6 @@
   //처리되지 않은 TypeError: this.getDate는 함수가 아님
   const a = 1   
 }
-
 
 {  
   function fancyDate2(this: Date) { // 바인딩할 this를 명시, 컴파일시 사라짐
