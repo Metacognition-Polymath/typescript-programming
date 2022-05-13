@@ -284,3 +284,49 @@ ambleAround(poodle); // OK
 ```
 
 ## 5.6 클래스는 값과 타입을 모두 선언한다.
+
+```ts
+// 값 또는 타입인 경우
+// 값
+let a = 999;
+
+// 타입
+type a = number;
+
+// 문맥상 타입스크립트는 값 a로 추론하기도 한다
+if (a + 1 > 3)
+  // 값과 타입을 동시에 생성하는 경우 - class, enum
+  class C {}
+const c: C = new C(); // C(class)는 타입이면서 동시에 값(생성자 함수)이다
+
+const Week = { Monday: 1 };
+const day: Week = Week.Monday; // Week(enum)은 타입이면서 동시에 값(enum)이다
+```
+
+## 5.7 다형성
+
+- class에서도 제네릭을 사용할 수 있다
+
+```ts
+class MyMap<K, V> {
+  constructor(initialKey: K, initialValue: V) {
+    // ...
+  }
+  get(key: K): V {
+    // ...
+  }
+  set(key: K, value: V): void {
+    // ...
+  }
+  // ...
+}
+```
+
+## 5.8 믹스인
+
+- 타입스크립트에서 trait, mixin 키워드를 제공하지 않지만 손쉽게 구현할 수 있다
+- 믹스인 : 동작과 프로퍼티를 클래스로 혼합(mix)할 수 있게 해주는 패턴
+  - 믹스인 규칙
+    - 상태를 가질 수 있다(e.g., 인스턴스 프로퍼티)
+    - 구체 메서드만 제공할 수 있다(추상 메서드는 안 됨)
+    - 생성자를 가질 수 있다(클래스가 혼합된 순서와 같은 순서로 호출됨)
