@@ -62,8 +62,8 @@
     moveTo(position:Position) { // 1. 추상클래스도 메서드 만들기가 가능하다.
       this.position = position
     }
-    abstract canMoveTo(position:Position):boolean 
-    // 2. 추상클래스는 반드시 추상메서드를 포함해야한다.
+    // abstract canMoveTo(position:Position):boolean 
+    // 2. 추상클래스는 반드시 추상메서드를 포함해야한다.?? 지워도 오류가 안남.
     // 추상메서드는 서브클래스에서 오버라이딩해서 사용한다.
   }
 
@@ -167,4 +167,14 @@
       ]
     } 
   }
+}
+
+
+{
+  class A {
+    constructor(protected name:string) {}
+  }
+  (new A("john")).name
+  // 인스턴스에서 protected 나 private 을 접근할 수 없음.
+  // 클래스에서만 protected 나 private 을 접근가능
 }

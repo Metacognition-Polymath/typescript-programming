@@ -31,6 +31,10 @@
     // 클래스에서(1.) 선언한 제네릭을 재선언하여 사용한다
     // 같은문자 K, V타입을 써도 클래스제네릭 K,V와 다르다.
 
+    // 유틸 메서드 사용할 때 static을 많이 쓴다.
+    // util method 예
+    // Math.random()
+    // Math.floor(Math.random() * 10)
   }
 
   let a = new MyMap('a',1) // let a: MyMap<string, number>
@@ -40,3 +44,5 @@
   a.set('a',2)
   console.log(a.get('a'))// 2
 }
+
+

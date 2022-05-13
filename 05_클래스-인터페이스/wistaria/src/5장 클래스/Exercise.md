@@ -66,6 +66,29 @@ Shoe.create('balletFlat') // (method) ShoeCreator.create(type: 'balletFlat'): Ba
 Shoe.create('boot')
 Shoe.create('sneaker')
 ```
+```ts
+interface Shoe { purpose:string }
+class BalletFlat implements Shoe { purpose = "dancing" }
+class Boot implements Shoe { purpose = "woodCutting" }
+class Sneaker implements Shoe { purpose = "walking" }
+
+let Shoe = {
+  create(type: 'balletFlat' | 'boot' | 'sneaker') {
+    // 리턴타입을 없에 타입추론으로 해결
+    switch(type) {
+      case 'balletFlat': return new BalletFlat()
+      case 'boot': return new Boot()
+      case 'sneaker': return new Sneaker()
+    }
+  }
+}
+
+Shoe.create('balletFlat') 
+// (method) create(type: 'balletFlat' | 'boot' | 'sneaker'): BalletFlat | Boot | Sneaker
+Shoe.create('boot')
+Shoe.create('sneaker')
+
+```
 
 4. 타입 안전성을 갖춘 빌더 패턴을 설계하는 방법을 고안해보자. 5.11.2 빌더패턴에서 구현한 빌더패턴을 다음처럼 확장하라
   - 최소한 URL과 method를 설정한 다음에만 .send를 호출 할 수 있음을 컴파일 타임에 보장한다.메서드를 특정 순서로만 호출 하도록 강제하면 이 기능을 더 쉽게 구현할 수 있는가? 그렇다면 this대신에 무엇을 반환 할 수 있는가? 

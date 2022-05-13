@@ -37,7 +37,6 @@
 
 // class decorator
 {
-
   type ClassConstructor<T> = new (...args:any[]) => T
 
   function serializable<T extends ClassConstructor<{getValue():string}>>(constructor:T){
@@ -61,5 +60,4 @@
 
   // 함수 데코레이터는 실행하지 않아도 데코데이터가 작동하는데
   // 클래스 데코레이터는 따로 실행해야 작동.
-
 }

@@ -24,16 +24,17 @@
   // new로 만들 수 있는 모든것을 생성자라 규정한다.
   // 생성자에 어떤 매개변수가 올지 모르므로 any타입의 인수를 받게 지정
 
-  function withEzDebug<C extends ClassConstructor>(Class:C){
+  function withEzDebug<C extends ClassConstructor>(ClassA:C){
     // 함수의 매개변수로 하나의 클래스 C(생성자)를 받게 셋팅 
-    return class extends Class {
+    return class extends ClassA {
       // 믹스인은 생성자를 인수로 받아 생성자를 반환
       constructor(...args:any[]){
         super(...args) // Class를 상속받아 사용하므로 Class의 생성자를 호출해야 함
       }
+      debugMethod(){}
     }
   }
-}
+}// 컴포지션
 
 // 디버깅이 작동하도록 만들어보자.
 {

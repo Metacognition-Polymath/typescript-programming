@@ -1,4 +1,4 @@
-// this를 타입으로 사용할 수 있다.
+// this(인스턴스)를 타입으로 사용할 수 있다.
 
 let set = new Set
 set.add(4).add(2).add(3).add(1).add(1)
@@ -14,16 +14,16 @@ console.log(set.has(4)) // true
   }
 
   class MutableSet extends Set {
-    delete(value:number):boolean { }
+    delete(value:number):boolean {}
     // 서브클래스는 오버라이딩 해서 
     // 자기 자신을 리턴타입으로 사용하게 해야 하는데
-    add(value:number):MutableSet { }
+    add(value:number):MutableSet {}
   }
 }
 
 {
   class Set {
-    has(value:number):boolean { }
+    has(value:number):boolean {}
     // 부모클래스의 메서드가 리턴값으로 this 를 사용하면
     add(value:number):this {}
   }

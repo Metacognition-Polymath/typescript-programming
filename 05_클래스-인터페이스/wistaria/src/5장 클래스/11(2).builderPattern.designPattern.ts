@@ -6,8 +6,8 @@
   new RequestBuilder()
     .setURL('/users')
     .setMethod('get')
-    .setData({ id: 1 })
-    .send()
+    .setData({ id: 1 }) // 생성부
+    .send() // 구현부
 }
 
 {

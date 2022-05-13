@@ -1,7 +1,7 @@
 
 // 1. 인터페이스는 오른쪽에 블록형태를 필요로 한다.
 // 2. 인터페이스는 다른 인터페이스 뿐 아니라 객체타입, 클래스도 상속받을 수 있다.
-// 3. 인터페이스의 상속은 할당 가능성을 따진다.
+// 3. 인터페이스의 상속은 할당 가능성을 따진다. (장점)
 // 4. 인터페이스는 같은 이름으로 선언된 다른 블록형태를 자동으로 합친다.(선언합침)
 
 {// 타입알리아스의 블록형태식은 인터페이스로 전환가능하다
@@ -76,6 +76,11 @@
     good(x:number|string):string
     bad(x:string):string
   }
+  const C:B = {
+    good(x){ return x.toString() },
+    bad(x){ return x.toString() }
+    //(method) bad(x: number): string (+1 overload)
+  }
 }
 
 {
@@ -91,3 +96,4 @@
     bad(x){ return x.toString() }
   }
 }
+
