@@ -10,7 +10,7 @@ console.log(set.has(4)) // true
   class Set {
     has(value:number):boolean { }
     // 부모클래스의 메서드가 리턴값으로 자신의 타입을 리턴하면
-    add(value:number):Sset { }
+    add(value:number):Set { }
   }
 
   class MutableSet extends Set {
