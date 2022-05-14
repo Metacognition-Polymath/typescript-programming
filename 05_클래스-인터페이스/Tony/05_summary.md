@@ -330,3 +330,94 @@ class MyMap<K, V> {
     - 상태를 가질 수 있다(e.g., 인스턴스 프로퍼티)
     - 구체 메서드만 제공할 수 있다(추상 메서드는 안 됨)
     - 생성자를 가질 수 있다(클래스가 혼합된 순서와 같은 순서로 호출됨)
+
+## 5.9 데코레이터
+
+- 장식하는 대상의 함수를 호출하는 기능을 제공하는 문법
+
+```ts
+@serializable
+class APIPayLoad {
+  getValue(): Payload {
+    // ...
+  }
+}
+
+// 위와 동일한 코드
+let APIPayload = serializable(
+  class APIPayLoad {
+    getValue(): Payload {
+      // ...
+    }
+  }
+);
+```
+
+- @serializable은 APIPayLoad를 감싸고 있으며 선택적으로 이를 대체하는 새 클래스를 반환한다
+- serializable이라는 함수의 parameter로 데코레이터 아래에 있는 것을 받은 후
+  - serializable을 실행 시키고
+  - 그 return값을 APIPayload로 전달
+
+#### more about decorator
+
+- [5-9_decorator](./5-9_decorator.md)
+
+## 5.10 final 클래스 흉내내기
+
+- final 클래스 : 클래스나 메서드를 확장하거나 오버라이드할 수 없게 만드는 기능
+- private으로 생성자를 만드는 것과 static 메서드를 이용해서 final 클래스를 흉내낼 수 있다
+
+## 5.11 디자인 패턴
+
+### 5.11.1 팩토리 패턴
+
+어떤 객체를 만들지 전적으로 팩토리에 위임한다
+
+```ts
+// factory pattern
+// type 대신 interface를 이용해도 됨
+type Shoe = {
+  purpose: string;
+};
+
+class BalletFlat implements Shoe {
+  purpose = "dancing";
+}
+
+class Boot implements Shoe {
+  purpose = "woodcutting";
+}
+
+class Sneaker implements Shoe {
+  purpose = "walking";
+}
+
+const Shoe = {
+  create(type: "balletFlat" | "boot" | "sneaker") {
+    switch (type) {
+      case "balletFlat":
+        return new BalletFlat();
+      case "boot":
+        return new Boot();
+      case "sneaker":
+        return new Sneaker();
+      default:
+        throw new Error("unexpected type");
+    }
+  },
+};
+
+const balletFlat: BalletFlat = Shoe.create("balletFlat");
+```
+
+### 5.11.2 빌더 패턴
+
+- ES6의 Map, Set 등의 자료 구조에서도 사용
+
+```ts
+new RequestBuilder()
+  .setURL("/users")
+  .setMethod("get")
+  .setData({ firstName: "Tony" })
+  .send();
+```
