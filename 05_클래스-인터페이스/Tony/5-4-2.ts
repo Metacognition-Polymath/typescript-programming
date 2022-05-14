@@ -16,7 +16,7 @@
     sleep(hours: number) {
       console.info("Slept for", hours, "hours");
     }
-    meow: () => void;
+    meow() {}
   }
 }
 {
@@ -38,7 +38,7 @@
     sleep(hours: number) {
       console.info("Slept for", hours, "hours");
     }
-    meow: () => void;
+    meow() {}
   }
 }
 // readonly 둘다 사용 가능
