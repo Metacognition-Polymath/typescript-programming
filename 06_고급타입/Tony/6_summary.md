@@ -174,6 +174,11 @@ const student: Pick<Student, "id" | "name"> = {
 // type Pick<T, K extends keyof T> = { [P in K]: T[P]; }
 ```
 
+| Obj 타입 | Union 타입 |
+| :------: | :--------: |
+|   Pick   |  Extract   |
+|   Omit   |  Exclude   |
+
 ### 6.3.4 컴패니언 객체 패턴
 
 - 같은 이름을 공유하는 객체와 클래스를 쌍으로 연결
@@ -233,3 +238,87 @@ function parseInput(input: string | number) {
 ```
 
 ## 6.5 조건부 타입
+
+```ts
+type IsString<T> = T extends string ? true : false;
+```
+
+### 6.5.1 분배적 조건부
+
+```ts
+type ToArray<T> = T extends unknown ? T[] : T[];
+type A = ToArray<number>;
+type B = ToArray<number | string>;
+```
+
+```ts
+type Without<T, U> = T extends U ? never : T;
+type WithoutA = Without<boolean | number | string, boolean>; // number | string
+```
+
+### 6.5.2 infer 키워드
+
+- 조건의 일부를 제네릭 타입으로 선언
+  - 제네릭을 인라인으로 선언하는 문법 : infer
+
+```ts
+// 6.5.2 infer
+type ElementType<T> = T extends unknown[] ? T[number] : T;
+type A = ElementType<number[]>; // number
+type B = ElementType<string[]>; // string
+type C = number extends unknown[] ? true : false;
+type D = number[][number]; // number
+
+// infer로 표현하기
+type ElementType2<T> = T extends (infer U)[] ? U : T; // 이해가 잘 안됨 안쓸 듯
+```
+
+### 6.5.3 내장 조건부 타입들
+
+```ts
+type A = number | string | boolean;
+type B = string | boolean;
+type C = Exclude<A, B>; // number
+```
+
+- Exclude => 제거
+
+```ts
+type A = number | string | boolean;
+type B = string;
+type C = Extract<A, B>; // string
+```
+
+- Extract => 추출
+
+## 6.6 탈출구
+
+### 6.6.1 타입 어서션
+
+- `as`, 단언, 슈퍼타입이나 서브타입으로만 어서션할 수 있다
+
+### 6.6.2 Nonnull 어서션
+
+- null 또는 undefined이 아님을 단언
+
+```ts
+element.parentNode!.removeChild(element); // 옵셔널 체이닝 처럼 느낌표를 넣어서 nonnull임을 표시
+```
+
+- nonnull 어서션을 많이 사용하고 있다면 코드를 리팩터링해야한다는 징조일 수 있다
+
+### 6.6.3 확실한 할당 어서션
+
+```ts
+let userId!: string; // ?와 같이 !를 타입 선언 시 식별자 뒤에 붙이면 확실하게 할당되어 있을 것을 의미(nonnull)
+```
+
+## 6.7 이름 기반 타입 흉내내기
+
+## 6.8 프로토타입 안전하게 확장하기
+
+#### 제네릭 예제
+
+#### declare
+
+- declare is used to tell the compiler "this thing (usually a variable) exists already, and therefore can be referenced by other code, also there is no need to compile this statement into any JavaScript".

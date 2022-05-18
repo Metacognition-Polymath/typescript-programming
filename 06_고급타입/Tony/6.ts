@@ -45,7 +45,8 @@
     },
     b: "b",
   }; // as const;
-
+  type AUnion = "a" | "b";
+  // let a = 'a';
   const asConst1: typeof asConst = {
     a: {
       a1: "aa1",
@@ -116,12 +117,12 @@
   };
 }
 {
-  /* ** Mapped type 예시 ** */
   type Account = {
     id: number;
     isEmployee: boolean;
     notes: string[];
   };
+  /* ** Mapped type 예시 ** */
 
   // 모든 필드를 선택형으로 만듦
   type OptionalAccount = {
@@ -173,5 +174,99 @@
     if (isString(input)) {
       formattedInput = input.toUpperCase(); // string에만 존재하는 toUpperCase()를 사용해도 에러가 발생하지 않음
     }
+  }
+}
+{
+  // 6.5.1
+  type ToArray<T> = T extends unknown ? T[] : T[];
+  type A = ToArray<number>;
+  type B = ToArray<number | string>; // (number | string)[] 가 아닌 number[] | string[] 이다
+  // const arr: B = [1, "a"]; // error
+
+  type Without<T, U> = T extends U ? never : T;
+
+  type WithoutA = Without<boolean | number | string, boolean>; // number | string
+}
+{
+  // 6.5.2 infer
+  type ElementType<T> = T extends unknown[] ? T[number] : T; // T[]를 전달했을 때
+  type A = ElementType<number[]>; // number
+  type B = ElementType<string[]>; // string
+  type AA = ElementType<string>; // string
+  type C = number extends unknown[] ? true : false;
+  type D = number[][number]; // number
+
+  // infer로 표현하기
+  type ElementType2<T> = T extends (infer U)[] ? U : T; // 이해가 잘 안됨 안쓸 듯
+}
+{
+  // 6.5.3 내장 조건부 타입들
+  type A = number | string | boolean;
+  type B = string | boolean;
+  type C = Exclude<A, B>; // number
+}
+{
+  type A = number | string | boolean;
+  type B = string;
+  type C = Extract<A, B>; // string
+}
+{
+  type Dialog = {
+    id?: string;
+  };
+  function removeFromDOM(dialog: Dialog, element: Element) {
+    element.parentNode!.removeChild(element); // 옵셔널 체이닝 처럼 느낌표를 넣어서 nonnull임을 표시
+    delete dialog.id;
+  }
+}
+{
+  type Obj0 = {
+    a: string;
+  };
+  type Obj1 = {
+    a: string;
+    b: number;
+  };
+  type Obj2 = {
+    a: string;
+    b: number;
+    c: boolean;
+  };
+  function func1(obj: Obj1) {
+    return obj;
+  }
+
+  const obj: Obj2 = {
+    a: "a",
+    b: 1,
+    c: true,
+  };
+  const obj0: Obj0 = {
+    a: "aa",
+  };
+  func1(obj); // 더 커도 포함이 되니까 됨
+  func1(obj0); // 포함이 안되니까 안됨
+}
+{
+  // 연습문제
+  type Exclusive<T, U> = Exclude<T, U> | Exclude<U, T>;
+  type R = Exclusive<1 | 2 | 3, 2 | 3 | 4>; // 1 | 4
+  type U = Exclusive<1 | 2, 2 | 4>;
+}
+
+{
+  // 4. Rewrite the example (from Definite Assignment Assertions) to avoid the definite assignment assertion.
+
+  const globalCache = {
+    get(key: string) {
+      return "user";
+    },
+  };
+
+  const userId = fetchUser();
+  userId.toUpperCase();
+
+  function fetchUser() {
+    return globalCache.get("userId");
   }
 }
