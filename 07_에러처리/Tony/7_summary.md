@@ -154,4 +154,4 @@ function func1WithCanMakeError(): U | Error1 | Error2 {
 
 ## 연습문제
 
-- 클래스에서 처리하지 않고 클래스 인스턴스를 생성 후 사용할 때 try catch로 처리할 것 같다
+- 클래스에서 처리하지 않고 클래스 인스턴스를 생성 후 사용할 때 try catch로 처리할 것 같다.
