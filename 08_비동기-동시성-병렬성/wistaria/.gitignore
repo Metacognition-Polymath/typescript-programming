@@ -1,0 +1,13 @@
+.idea
+node_modules
+package-lock.json
+src/2장 타입스크립트 전체보기
+src/3장 타입의 모든것
+src/4장 함수
+src/5장 클래스
+src/6장 고급타입
+src/7장 에러처리
+
+
+
+
