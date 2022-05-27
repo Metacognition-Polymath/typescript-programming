@@ -77,3 +77,18 @@ async function main() {
 - "target": "es2017" 도 설정해줘야 함
 
 ### 10.2.2 CommonJS와 AMD 코드 사용하기
+
+모듈을 default import를 사용하려면
+- tsconfig.json의 compilerOptions에서 esModuleInterop: true를 설정하면 된다
+
+```ts
+import fs from 'fs'
+
+fs.readFile('some/file.txt')
+```
+
+## 결론
+- namespaces는 전역으로 합쳐준다
+- 하지만 어떤 설정(잘모름)이 없으면 타입에러는 없지만 런타임에서 돌아가진 않는다
+- 아직 namespaces가 모듈(import)에 비해 쓸만한 부분을 찾지 못 했다
+- enum같은 곳에 namespaces를 이용하면 메서드를 추가할 수 있다
