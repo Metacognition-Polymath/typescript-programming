@@ -66,3 +66,77 @@ declare class Observable<T> {
   - 3) 타입스크립트 코드의 불필요한 재컴파일을 막아주어 컴파일 시간을 크게 줄여준다.
 
 - 타입 선언은 타입스크립트에 "자바스크립트에는 이런저런 정보가 정의되어 있어"라고 알려주는 수단이다.
+  - 앰비언트(ambient) : 타입만 선언되어 있는 것
+  - 예시
+    - 전역 Promise를 폴리필(polyfill)
+    - process.env 를 정의한 후 타입스크립트에 알려주기
+    - 프로젝트 전역으로 이용할 수 있는 타입을 정의하여 임포트 없이 바로 사용하고자 할 때
+    - 타입스크립트에 NPM으로 설치한 서드 파티 모듈이 있음을 알릴 때
+
+- 타입선언
+  - 스크립트 모드의 .ts 또는 .d.ts 파일 안에 위치해야 한다
+    - 스크립트 모드 : `<script>` 태그를 type="module" 없이 사용하는 것
+    - 최상위 영역이 공유 됨
+  - 타입 선언 관례
+    - 대응하는 .js 파일이 있으면 .d.ts 확장자를 사용
+    - 아니면 그냥 .ts 확장자를 사용
+  - 타입관련 파일 이름은 본인 마음이고 파일 하나에 원하는 만큼의 타입정의를 추가할 수 있다
+  - 최상위 값에는 declare를 붙여서 공유하지만
+  - type, interface엔 사용하지 않아도 된다
+
+### 11.1.1 앰비언트 변수 선언
+
+```ts
+declare const process1: {
+  env: {
+    NODE_ENV: 'development' | 'production'
+  }
+}
+```
+- 루트 디렉토리에서 선언 해놓으면 하위 폴더들에서 임포트 없이 사용 가능하다
+
+#### TSC 설정 - lib
+- window와 document 같은 Web API를 사용하려면 lib에 추가해주면 된다
+
+### 11.1.2 앰비언트 타입 선언
+- 명시적으로 import하지 않아도 어디에서든 전역으로 사용할 수 있다
+
+### 11.1.3 앰비언트 모듈 선언
+- 깃헙의 DEfinitely Typed에 기여하기 귀찮다면 앰비언트 모듈선언을 사용하자
+
+```ts
+declare module 'module-name' {
+  export type MyType = number;
+}
+```
+
+## 자바스크립트에서도 타입체크를 할 수 있다
+
+- tsconfig.json 플래그
+
+```ts
+// 타입을 사용하지 않는 자바스크립트 임포트 - 타입 안전성 : 나쁨
+{
+  allowJs: true
+}
+
+// 자바스크립트를 임포트 하고 확인 - 타입 안전성 : 좋음
+{
+  allowJs: true,
+  checkJs: true
+}
+
+// JSDoc 어노테이션을 포함하는 자바스크립트를 임포트하고 확인 - 타입 안전성 : 훌륭함
+{
+  allowJs: true,
+  checkJs: true,
+  strict: true
+}
+
+// 타입 선언을 포함하는 자바스크립트 임포트 - 타입 안전성 : 훌륭함
+// 즉, 타입스크립트만 임포트
+{
+  allowJs: false,
+  strict: true
+}
+```
